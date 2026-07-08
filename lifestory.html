@@ -348,6 +348,8 @@
                 setTimeout(() => {
                     document.getElementById("loader").classList.add("hidden");
                 }, 200);
+                const overlay = document.getElementById("page-transition");
+                overlay.style.clipPath = "circle(0px at 50% 50%)";
             });
 
             function setLanguage(lang) {
