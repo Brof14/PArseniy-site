@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Arseniy Parakhin</title>
+        <meta
+            name="description"
+            content="Software Developer building from Biysk, Altai."
+        />
+        <meta name="theme-color" content="#0d0d0d" />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛰️</text></svg>"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #111111;
+                --ink: #f5f5f5;
+                --ink-dim: #9a9a9a;
+                --line: #333333;
+                --x: 50%;
+                --y: 50%;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--ink);
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 60px 20px;
+                position: relative;
+                overflow: hidden;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .bg {
+                position: fixed;
+                inset: -2%;
+                z-index: 0;
+                background: url("altai-bg.jpg") center 55% / cover no-repeat;
+                filter: saturate(0.8) brightness(0.65);
+                pointer-events: none;
+            }
+
+            .spotlight {
+                position: fixed;
+                inset: 0;
+                z-index: 2;
+                pointer-events: none;
+                background: radial-gradient(
+                    circle 250px at var(--x) var(--y),
+                    transparent 0%,
+                    rgba(17, 17, 17, 0.75) 30%,
+                    rgba(17, 17, 17, 0.95) 100%
+                );
+                will-change: background;
+            }
+
+            .grain {
+                position: fixed;
+                inset: 0;
+                z-index: 3;
+                pointer-events: none;
+                opacity: 0.03;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
+
+            .card {
+                max-width: 620px;
+                width: 100%;
+                position: relative;
+                z-index: 10;
+                background: rgba(17, 17, 17, 0.3);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-radius: 16px;
+                padding: 40px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .reveal {
+                opacity: 0;
+                transform: translateY(6px);
+                animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+            .reveal.d1 {
+                animation-delay: 0.08s;
+            }
+            .reveal.d2 {
+                animation-delay: 0.16s;
+            }
+            .reveal.d3 {
+                animation-delay: 0.24s;
+            }
+
+            @keyframes rise {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .header {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                margin-bottom: 32px;
+                position: relative;
+            }
+
+            .avatar {
+                width: 72px;
+                height: 72px;
+                border-radius: 50%;
+                background: url("photo_2026-06-28_20-30-13.jpg") center/cover
+                    no-repeat;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                flex-shrink: 0;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            }
+
+            @keyframes shimmer {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            .shimmer-text {
+                background: linear-gradient(
+                    90deg,
+                    #888888 0%,
+                    #ffffff 50%,
+                    #888888 100%
+                );
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                animation: shimmer 6s ease-in-out infinite;
+                font-size: 15px;
+                font-weight: 500;
+                margin: 0 0 4px;
+                letter-spacing: 0.02em;
+            }
+
+            h1 {
+                font-size: 28px;
+                font-weight: 600;
+                margin: 0;
+                letter-spacing: -0.02em;
+                color: #ffffff;
+                line-height: 1.15;
+            }
+
+            .bio {
+                font-size: 17px;
+                line-height: 1.75;
+                color: #c0c0c0;
+                margin: 0 0 36px;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            }
+            .bio p {
+                margin: 0 0 20px;
+            }
+            .bio p:last-child {
+                margin: 0;
+            }
+            .bio b {
+                color: var(--ink);
+                font-weight: 600;
+            }
+
+            .meta {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 15px;
+                color: var(--ink-dim);
+                margin-bottom: 20px;
+                font-weight: 500;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #52e591;
+                box-shadow: 0 0 10px rgba(82, 229, 145, 0.4);
+                animation: pulse 3s ease-in-out infinite;
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                50% {
+                    opacity: 0.6;
+                    transform: scale(0.92);
+                }
+            }
+
+            .footer-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .footer-row a.writings {
+                font-size: 15px;
+                color: var(--ink-dim);
+                text-decoration: none;
+                transition: color 0.2s ease;
+                font-weight: 500;
+            }
+            .footer-row a.writings:hover {
+                color: var(--ink);
+            }
+
+            .lang-switcher {
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                font-size: 12px;
+                color: var(--ink-dim);
+            }
+            .lang-btn {
+                background: none;
+                border: none;
+                color: var(--ink-dim);
+                cursor: pointer;
+                padding: 2px 6px;
+                font-size: 12px;
+                font-weight: 400;
+                transition: color 0.15s ease;
+                font-family: inherit;
+            }
+            .lang-btn:hover {
+                color: var(--ink);
+            }
+            .lang-btn.active {
+                color: var(--ink);
+                font-weight: 500;
+            }
+
+            .icons {
+                display: flex;
+                gap: 24px;
+                align-items: center;
+            }
+            .icons a {
+                color: var(--ink-dim);
+                display: flex;
+                transition:
+                    color 0.2s ease,
+                    transform 0.2s ease;
+            }
+            .icons a:hover {
+                color: var(--ink);
+                transform: translateY(-2px);
+            }
+            .icons svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            #page-transition {
+                position: fixed;
+                inset: 0;
+                z-index: 50;
+                pointer-events: none;
+                background: #111111;
+                clip-path: circle(0px at var(--cx, 50%) var(--cy, 50%));
+                transition: none;
+            }
+            #page-transition.active {
+                animation: circle-reveal 0.5s cubic-bezier(0.65, 0, 0.35, 1)
+                    forwards;
+            }
+            @keyframes circle-reveal {
+                to {
+                    clip-path: circle(150% at var(--cx, 50%) var(--cy, 50%));
+                }
+            }
+
+            #loader {
+                position: fixed;
+                inset: 0;
+                z-index: 100;
+                background: #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition:
+                    opacity 0.4s ease,
+                    visibility 0.4s ease;
+                overflow: hidden;
+            }
+            #loader.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+            .loader-rings {
+                position: relative;
+                width: 80px;
+                height: 80px;
+            }
+            .loader-ring {
+                position: absolute;
+                inset: 0;
+                border: 2px solid transparent;
+                border-top-color: rgba(255, 255, 255, 0.4);
+                border-radius: 50%;
+                animation: spin 1.2s linear infinite;
+            }
+            .loader-ring:nth-child(2) {
+                animation-duration: 0.9s;
+                animation-direction: reverse;
+                border-top-color: rgba(255, 255, 255, 0.2);
+                scale: 0.75;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    padding: 40px 16px;
+                    overflow-y: auto;
+                }
+                .card {
+                    padding: 24px;
+                }
+                .header {
+                    gap: 14px;
+                    margin-bottom: 24px;
+                }
+                .avatar {
+                    width: 60px;
+                    height: 60px;
+                }
+                h1 {
+                    font-size: 24px;
+                }
+                .bio {
+                    font-size: 15px;
+                    margin-bottom: 28px;
+                }
+                .footer-row {
+                    flex-direction: column;
+                    gap: 20px;
+                    align-items: flex-start;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader">
+            <div class="loader-rings">
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+            </div>
+        </div>
+        <div class="bg"></div>
+        <div class="spotlight"></div>
+        <div class="grain"></div>
+
+        <main class="card">
+            <div class="header reveal d1">
+                <div class="avatar"></div>
+                <div>
+                    <p
+                        class="shimmer-text"
+                        data-en="yo, I'm"
+                        data-ru="привет, я"
+                    >
+                        yo, I'm
+                    </p>
+                    <h1 data-en="Arseniy Parakhin" data-ru="Арсений Парахин">
+                        Arseniy Parakhin
+                    </h1>
+                </div>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <span style="color: rgba(255, 255, 255, 0.2)">|</span>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                </div>
+            </div>
+
+            <div class="bio reveal d2">
+                <p
+                    data-en="yo, I'm Arseniy. I'm <b>14</b>. Building backend systems from a remote <b>Altai village</b> near Biysk. Bypassed the classic syntax grind — I use AI to instantly ship production-ready systems instead of writing raw boilerplate by hand."
+                    data-ru="привет, я Арсений. Мне <b>14</b> лет. Пишу бэкенд из <b>алтайской деревни</b> под Бийском. Забил на классическую зубрёжку синтаксиса — сразу собираю рабочие системы с помощью ИИ вместо написания шаблонного кода вручную."
+                >
+                    yo, I'm Arseniy. I'm <b>14</b>. Building backend systems
+                    from a remote <b>Altai village</b> near Biysk. Bypassed the
+                    classic syntax grind — I use AI to instantly ship
+                    production-ready systems instead of writing raw boilerplate
+                    by hand.
+                </p>
+                <p
+                    data-en="Founded <b>ByMeVPN</b> (automated VLESS network routing) and <b>ByMeShop</b> (digital commerce bot with crypto and fiat payment gateways via aiogram and PostgreSQL). Engineered, launched, and monetized everything directly from my bedroom."
+                    data-ru="Основал <b>ByMeVPN</b> (автоматизированная сеть на VLESS) и <b>ByMeShop</b> (коммерс-бот с оплатой криптой и фиатом через aiogram и PostgreSQL). Спроектировал, запустил и монетизировал всё сам, прямо из своей комнаты."
+                >
+                    Founded <b>ByMeVPN</b> (automated VLESS network routing) and
+                    <b>ByMeShop</b> (digital commerce bot with crypto and fiat
+                    payment gateways via aiogram and PostgreSQL). Engineered,
+                    launched, and monetized everything directly from my bedroom.
+                </p>
+                <p
+                    data-en="Currently mastering <b>Go</b> and core algorithms. Preparing for a Computer Engineering leap to <b>Milan</b>. Ultimate stop: tech startups in <b>Silicon Valley</b>."
+                    data-ru="Сейчас осваиваю <b>Go</b> и алгоритмы. Готовлюсь к прыжку в <b>Милан</b> на Computer Engineering. Конечная цель: технологические стартапы в <b>Кремниевой долине</b>."
+                >
+                    Currently mastering <b>Go</b> and core algorithms. Preparing
+                    for a Computer Engineering leap to <b>Milan</b>. Ultimate
+                    stop: tech startups in <b>Silicon Valley</b>.
+                </p>
+            </div>
+
+            <div class="meta reveal d3">
+                <span class="dot"></span>
+                <span data-en="Biysk, Altai" data-ru="Бийск, Алтай"
+                    >Biysk, Altai</span
+                >
+                · <span id="clock">--:--</span>
+            </div>
+
+            <div class="footer-row reveal d3">
+                <a
+                    class="writings"
+                    href="lifestory.html"
+                    id="writings-link"
+                    data-en="Story →"
+                    data-ru="История →"
+                    >Story →</a
+                >
+                <div class="icons">
+                    <a
+                        href="https://x.com/Brof_14"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="X / Twitter"
+                    >
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.3 19.5h2.04L6.5 3.25H4.3L17.6 20.65z"
+                            />
+                        </svg>
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/parakhinarseniy/"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="LinkedIn"
+                    >
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z"
+                            />
+                        </svg>
+                    </a>
+                    <a
+                        href="https://t.me/A7seniy"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Telegram"
+                    >
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23.05 2.1L19.6 21.53c-.26 1.15-.94 1.43-1.9.89l-5.26-3.88-2.54 2.44c-.28.28-.52.52-1.06.52l.38-5.4L19.1 6.1c.42-.37-.09-.58-.65-.2L6.7 13.3l-5.24-1.64c-1.14-.36-1.16-1.14.24-1.68L21.6.86c.95-.35 1.78.22 1.45 1.24z"
+                            />
+                        </svg>
+                    </a>
+                    <a
+                        href="https://calendly.com/mama-nikfjdj/30min"
+                        target="_blank"
+                        rel="noopener"
+                        aria-label="Book a call"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <rect
+                                x="3"
+                                y="4"
+                                width="18"
+                                height="18"
+                                rx="2"
+                                ry="2"
+                            ></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <div id="page-transition"></div>
+
+        <script>
+            window.addEventListener("load", () => {
+                setTimeout(() => {
+                    document.getElementById("loader").classList.add("hidden");
+                }, 200);
+            });
+
+            function setLanguage(lang) {
+                document.querySelectorAll(".lang-btn").forEach((btn) => {
+                    btn.classList.toggle("active", btn.dataset.lang === lang);
+                });
+
+                document.querySelectorAll("[data-en]").forEach((el) => {
+                    el.innerHTML = el.dataset[lang];
+                });
+
+                localStorage.setItem("lang", lang);
+            }
+
+            const savedLang = localStorage.getItem("lang") || "en";
+            setLanguage(savedLang);
+
+            document.querySelectorAll(".lang-btn").forEach((btn) => {
+                btn.addEventListener("click", () =>
+                    setLanguage(btn.dataset.lang),
+                );
+            });
+
+            function updateClock() {
+                document.getElementById("clock").textContent =
+                    new Date().toLocaleTimeString("en-GB", {
+                        timeZone: "Asia/Barnaul",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                    });
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            const root = document.documentElement;
+            let targetX = window.innerWidth / 2,
+                targetY = window.innerHeight / 2;
+
+            function updateSpotlight() {
+                root.style.setProperty("--x", targetX + "px");
+                root.style.setProperty("--y", targetY + "px");
+                requestAnimationFrame(updateSpotlight);
+            }
+            requestAnimationFrame(updateSpotlight);
+
+            window.addEventListener("mousemove", (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+
+            window.addEventListener(
+                "touchmove",
+                (e) => {
+                    if (e.touches.length > 0) {
+                        targetX = e.touches[0].clientX;
+                        targetY = e.touches[0].clientY;
+                    }
+                },
+                { passive: true },
+            );
+
+            const resetSpotlight = () => {
+                targetX = window.innerWidth / 2;
+                targetY = window.innerHeight / 2;
+            };
+            document.addEventListener("mouseleave", resetSpotlight);
+
+            const link = document.getElementById("writings-link");
+            const overlay = document.getElementById("page-transition");
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const href = this.getAttribute("href");
+                const rect = this.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                overlay.style.setProperty("--cx", cx + "px");
+                overlay.style.setProperty("--cy", cy + "px");
+                overlay.classList.add("active");
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 450);
+            });
+        </script>
+    </body>
+</html>

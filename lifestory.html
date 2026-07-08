@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Story — Arseniy Parakhin</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #111111;
+                --ink: #f5f5f5;
+                --ink-dim: #9a9a9a;
+                --line: #333333;
+                --x: 50%;
+                --y: 50%;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--ink);
+                font-family:
+                    "Inter",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 60px 20px;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                overflow: hidden;
+            }
+
+            .bg {
+                position: fixed;
+                inset: -2%;
+                z-index: 0;
+                background: url("altai-bg.jpg") center 55% / cover no-repeat;
+                filter: saturate(0.8) brightness(0.65);
+                pointer-events: none;
+            }
+
+            .spotlight {
+                position: fixed;
+                inset: 0;
+                z-index: 2;
+                pointer-events: none;
+                background: radial-gradient(
+                    circle 250px at var(--x) var(--y),
+                    transparent 0%,
+                    rgba(17, 17, 17, 0.75) 30%,
+                    rgba(17, 17, 17, 0.95) 100__
+                );
+                will-change: background;
+            }
+
+            .grain {
+                position: fixed;
+                inset: 0;
+                z-index: 3;
+                pointer-events: none;
+                opacity: 0.03;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
+
+            .card {
+                max-width: 620px;
+                width: 100%;
+                position: relative;
+                z-index: 10;
+                background: rgba(17, 17, 17, 0.3);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border-radius: 16px;
+                padding: 40px;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .back {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 16px;
+                color: var(--ink-dim);
+                text-decoration: none;
+                transition:
+                    color 0.2s ease,
+                    transform 0.2s ease;
+                font-weight: 500;
+            }
+            .back:hover {
+                color: var(--ink);
+                transform: translateX(-4px);
+            }
+
+            .lang-switcher {
+                position: absolute;
+                top: 4px;
+                right: 0;
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                font-size: 12px;
+                color: var(--ink-dim);
+            }
+            .lang-btn {
+                background: none;
+                border: none;
+                color: var(--ink-dim);
+                cursor: pointer;
+                padding: 2px 6px;
+                font-size: 12px;
+                font-weight: 400;
+                transition: color 0.15s ease;
+                font-family: inherit;
+            }
+            .lang-btn:hover {
+                color: var(--ink);
+            }
+            .lang-btn.active {
+                color: var(--ink);
+                font-weight: 500;
+            }
+
+            .header-section {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 32px;
+                position: relative;
+            }
+
+            .content {
+                font-size: 17px;
+                line-height: 1.8;
+                color: #c0c0c0;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                animation: fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+
+            @keyframes fade-in {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .content p {
+                margin: 0 0 24px;
+            }
+            .content p:last-child {
+                margin: 0;
+            }
+            .content b {
+                color: var(--ink);
+                font-weight: 600;
+            }
+
+            #page-transition {
+                position: fixed;
+                inset: 0;
+                z-index: 50;
+                pointer-events: none;
+                background: #111111;
+                clip-path: circle(150% at 50% 50%);
+            }
+
+            @keyframes circle-reveal-back {
+                from {
+                    clip-path: circle(150% at 50% 50%);
+                }
+                to {
+                    clip-path: circle(0px at 50% 50%);
+                }
+            }
+
+            #loader {
+                position: fixed;
+                inset: 0;
+                z-index: 100;
+                background: #111111;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition:
+                    opacity 0.4s ease,
+                    visibility 0.4s ease;
+                overflow: hidden;
+            }
+            #loader.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+            .loader-rings {
+                position: relative;
+                width: 80px;
+                height: 80px;
+            }
+            .loader-ring {
+                position: absolute;
+                inset: 0;
+                border: 2px solid transparent;
+                border-top-color: rgba(255, 255, 255, 0.4);
+                border-radius: 50%;
+                animation: spin 1.2s linear infinite;
+            }
+            .loader-ring:nth-child(2) {
+                animation-duration: 0.9s;
+                animation-direction: reverse;
+                border-top-color: rgba(255, 255, 255, 0.2);
+                scale: 0.75;
+            }
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    padding: 40px 16px;
+                    overflow-y: auto;
+                }
+                .card {
+                    padding: 24px;
+                }
+                .content {
+                    font-size: 15px;
+                }
+                .header-section {
+                    margin-bottom: 24px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="loader">
+            <div class="loader-rings">
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+            </div>
+        </div>
+        <div class="bg"></div>
+        <div class="spotlight"></div>
+        <div class="grain"></div>
+
+        <main class="card">
+            <div class="header-section">
+                <a
+                    href="index.html"
+                    class="back"
+                    id="back-link"
+                    data-en="← back"
+                    data-ru="← назад"
+                    >← back</a
+                >
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <span style="color: rgba(255, 255, 255, 0.2)">|</span>
+                    <button class="lang-btn" data-lang="ru">RU</button>
+                </div>
+            </div>
+
+            <div class="content">
+                <p
+                    data-en="I grew up in a tiny village near <b>Biysk</b>, surrounded by mountains. There is zero local tech scene. While most kids at school wasted their recess just killing time, I used that isolation as leverage. Outside of classes, my focus was entirely wired into the global network."
+                    data-ru="Я вырос в маленькой деревне под <b>Бийском</b>. Вокруг ноль айти-тусовки. Пока большинство детей в школе просто тратили перемены впустую, я использовал эту изоляцию как преимущество. Вне занятий мой фокус был полностью подключён к глобальной сети."
+                >
+                    I grew up in a tiny village near <b>Biysk</b>, surrounded by
+                    mountains. There is zero local tech scene. While most kids
+                    at school wasted their recess just killing time, I used that
+                    isolation as leverage. Outside of classes, my focus was
+                    entirely wired into the global network.
+                </p>
+
+                <p
+                    data-en="I realized a new meta early on: I don't need to write script architectures entirely from scratch to build real products. Instead, I mastered directing advanced AI development environments. My pipeline became dead simple: <b>Idea → AI-driven architecture → MVP → Active Cashflow</b>."
+                    data-ru="Я рано осознал новую мету: мне не нужно писать архитектуру скриптов полностью с нуля, чтобы создавать реальные продукты. Вместо этого я освоил управление ИИ-средами. Мой пайплайн стал предельно простым: <b>Идея → ИИ-архитектура → MVP → Активный денежный поток</b>."
+                >
+                    I realized a new meta early on: I don't need to write script
+                    architectures entirely from scratch to build real products.
+                    Instead, I mastered directing advanced AI development
+                    environments. My pipeline became dead simple:
+                    <b>Idea → AI-driven architecture → MVP → Active Cashflow</b
+                    >.
+                </p>
+
+                <p
+                    data-en="The first real battle-test was founding <b>ByMeVPN</b>. I deployed an automated network routing infrastructure on the <b>VLESS</b> protocol, optimized databases, and rebuilt the payments panel. Right after, I shipped <b>ByMeShop</b> — a platform handling crypto and fiat payment gateways via Python, aiogram, and PostgreSQL. Both were engineered and monetized directly from my bedroom."
+                    data-ru="Первым реальным испытанием стало основание <b>ByMeVPN</b>. Я развернул автоматизированную инфраструктуру маршрутизации на протоколе <b>VLESS</b>, оптимизировал базы данных и перестроил панель платежей. Сразу после этого я запустил <b>ByMeShop</b> — платформу, обрабатывающую крипту и фиат через Python, aiogram и PostgreSQL. Оба проекта были запущены и монетизированы прямо из моей спальни."
+                >
+                    The first real battle-test was founding <b>ByMeVPN</b>. I
+                    deployed an automated network routing infrastructure on the
+                    <b>VLESS</b> protocol, optimized databases, and rebuilt the
+                    payments panel. Right after, I shipped <b>ByMeShop</b> — a
+                    platform handling crypto and fiat payment gateways via
+                    Python, aiogram, and PostgreSQL. Both were engineered and
+                    monetized directly from my bedroom.
+                </p>
+
+                <p
+                    data-en="To keep my execution high, I split my world between deep tech and intense physical routines. I run <b>3-5km</b>, play volleyball, and hit heavy workouts multiple times a week. I'm also in my <b>7th year</b> of classical training on the accordion, and I grind Anki flashcards daily to force my English to fluency."
+                    data-ru="Чтобы поддерживать высокую продуктивность, я разделяю код и спорт. Бегаю <b>3-5 км</b>, играю в волейбол и тренируюсь несколько раз в неделю. Также я <b>7-й год</b> учусь игре на классическом аккордеоне и ежедневно гринду карточки Anki для английского."
+                >
+                    To keep my execution high, I split my world between deep
+                    tech and intense physical routines. I run <b>3-5km</b>, play
+                    volleyball, and hit heavy workouts multiple times a week.
+                    I'm also in my <b>7th year</b> of classical training on the
+                    accordion, and I grind Anki flashcards daily to force my
+                    English to fluency.
+                </p>
+
+                <p
+                    data-en="Next milestones: transitioning to a tech lyceum, securing a silver <b>512GB MacBook Neo</b>, and moving to Italy to crush a Computer Engineering curriculum in <b>Milan</b>. Ultimate target is <b>Silicon Valley</b>."
+                    data-ru="Следующие вехи: переход в технический лицей, покупка серебристого <b>MacBook Neo 512GB</b> и переезд в Италию на Computer Engineering в <b>Милан</b>. Конечная цель — <b>Кремниевая долина</b>."
+                >
+                    Next milestones: transitioning to a tech lyceum, securing a
+                    silver <b>512GB MacBook Neo</b>, and moving to Italy to
+                    crush a Computer Engineering curriculum in <b>Milan</b>.
+                    Ultimate target is <b>Silicon Valley</b>.
+                </p>
+            </div>
+        </main>
+
+        <div id="page-transition"></div>
+
+        <script>
+            window.addEventListener("load", () => {
+                setTimeout(() => {
+                    document.getElementById("loader").classList.add("hidden");
+                }, 200);
+            });
+
+            function setLanguage(lang) {
+                document.querySelectorAll(".lang-btn").forEach((btn) => {
+                    btn.classList.toggle("active", btn.dataset.lang === lang);
+                });
+
+                document.querySelectorAll("[data-en]").forEach((el) => {
+                    el.innerHTML = el.dataset[lang];
+                });
+
+                localStorage.setItem("lang", lang);
+            }
+
+            const savedLang = localStorage.getItem("lang") || "en";
+            setLanguage(savedLang);
+
+            document.querySelectorAll(".lang-btn").forEach((btn) => {
+                btn.addEventListener("click", () =>
+                    setLanguage(btn.dataset.lang),
+                );
+            });
+
+            const root = document.documentElement;
+            let targetX = window.innerWidth / 2,
+                targetY = window.innerHeight / 2;
+
+            function updateSpotlight() {
+                root.style.setProperty("--x", targetX + "px");
+                root.style.setProperty("--y", targetY + "px");
+                requestAnimationFrame(updateSpotlight);
+            }
+            requestAnimationFrame(updateSpotlight);
+
+            window.addEventListener("mousemove", (e) => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+
+            window.addEventListener(
+                "touchmove",
+                (e) => {
+                    if (e.touches.length > 0) {
+                        targetX = e.touches[0].clientX;
+                        targetY = e.touches[0].clientY;
+                    }
+                },
+                { passive: true },
+            );
+
+            const backLink = document.getElementById("back-link");
+            backLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                const href = this.getAttribute("href");
+                const overlay = document.getElementById("page-transition");
+
+                overlay.style.animation = "none";
+                overlay.style.clipPath = "circle(150% at 50% 50%)";
+                void overlay.offsetWidth;
+                overlay.style.animation =
+                    "circle-reveal-back 0.45s cubic-bezier(0.65,0,0.35,1) forwards";
+
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 400);
+            });
+        </script>
+    </body>
+</html>
