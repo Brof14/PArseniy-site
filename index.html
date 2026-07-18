@@ -6,9 +6,17 @@
         <title>Arseniy Parakhin</title>
         <meta
             name="description"
-            content="Software Developer building from Biysk, Altai."
+            content="Arseniy Parakhin - Entrepreneur and builder from Altai, Russia. Created ByMeVPN. Now building AI startups."
         />
-        <meta name="theme-color" content="#0d0d0d" />
+        <meta name="theme-color" content="#111111" />
+        <meta property="og:title" content="Arseniy Parakhin" />
+        <meta property="og:description" content="Entrepreneur and builder from Altai, Russia. Created ByMeVPN. Now building AI startups." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://parahin.space/" />
+        <meta property="og:image" content="https://parahin.space/altai-bg.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Arseniy Parakhin" />
+        <meta name="twitter:description" content="Entrepreneur and builder from Altai, Russia. Created ByMeVPN. Now building AI startups." />
         <link
             rel="icon"
             href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛰️</text></svg>"
@@ -269,6 +277,11 @@
                 font-weight: 400;
                 transition: color 0.15s ease;
                 font-family: inherit;
+                border-radius: 4px;
+            }
+            .lang-btn:focus {
+                outline: 2px solid rgba(255, 255, 255, 0.3);
+                outline-offset: 2px;
             }
             .lang-btn:hover {
                 color: var(--ink);
@@ -289,6 +302,13 @@
                 transition:
                     color 0.2s ease,
                     transform 0.2s ease;
+                border-radius: 4px;
+                padding: 4px;
+                margin: -4px;
+            }
+            .icons a:focus {
+                outline: 2px solid rgba(255, 255, 255, 0.3);
+                outline-offset: 2px;
             }
             .icons a:hover {
                 color: var(--ink);
@@ -408,10 +428,10 @@
                 <div>
                     <p
                         class="shimmer-text"
-                        data-en="yo, I'm"
-                        data-ru="привет, я"
+                        data-en="Hi, I'm"
+                        data-ru="Привет, я"
                     >
-                        yo, I'm
+                        Hi, I'm
                     </p>
                     <h1 data-en="Arseniy Parakhin" data-ru="Арсений Парахин">
                         Arseniy Parakhin
@@ -426,16 +446,16 @@
 
             <div class="bio reveal d2">
                 <p
-                    data-en="From a small village in Altai, Russia."
+                    data-en="Originally from a small village in Altai, Russia."
                     data-ru="Из маленькой деревни в Алтае, Россия."
                 >
-                    From a small village in Altai, Russia.
+                    Originally from a small village in Altai, Russia.
                 </p>
                 <p
-                    data-en="Built <b>ByMeVPN</b>. Now building my next startup."
-                    data-ru="Создал <b>ByMeVPN</b>. Сейчас создаю свой следующий стартап."
+                    data-en="Founded <b>ByMeVPN</b>. Currently building my next venture."
+                    data-ru="Основал <b>ByMeVPN</b>. Сейчас создаю свой следующий проект."
                 >
-                    Built <b>ByMeVPN</b>. Now building my next startup.
+                    Founded <b>ByMeVPN</b>. Currently building my next venture.
                 </p>
                 <p
                     data-en="Preparing for Computer Engineering at <b>Politecnico di Milano</b>."
@@ -444,10 +464,10 @@
                     Preparing for Computer Engineering at <b>Politecnico di Milano</b>.
                 </p>
                 <p
-                    data-en="Long-term: building AI startups used by millions."
-                    data-ru="В долгосрочной перспективе: создание AI-стартапов, которыми пользуются миллионы."
+                    data-en="Long-term vision: building AI products that impact millions."
+                    data-ru="Долгосрочная цель: создание AI-продуктов, которые повлияют на миллионы людей."
                 >
-                    Long-term: building AI startups used by millions.
+                    Long-term vision: building AI products that impact millions.
                 </p>
             </div>
 
@@ -456,7 +476,7 @@
                 <span data-en="Biysk, Altai" data-ru="Бийск, Алтай"
                     >Biysk, Altai</span
                 >
-                · <span id="clock">--:--</span>
+                · <span id="clock" aria-label="Local time">--:--</span>
             </div>
 
             <div class="footer-row reveal d3">
@@ -574,6 +594,7 @@
                         minute: "2-digit",
                     });
             }
+            // Update clock immediately to avoid --:-- flash
             updateClock();
             setInterval(updateClock, 1000);
 
